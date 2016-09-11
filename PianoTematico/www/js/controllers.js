@@ -24,5 +24,5 @@ angular.module('starter.controllers', [])
 })
 
 .controller('JugarCtrl', function($scope, $ionicPopup, $state, $stateParams, $cordovaVibration,  $cordovaNativeAudio, $timeout) {
-
+  $scope.usuario = angular.fromJson($stateParams);
 });
