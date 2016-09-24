@@ -23,10 +23,18 @@ angular.module('starter.controllers', [])
    };
 })
 
-.controller('JugarCtrl', function($scope, $ionicPopup, $state, $stateParams, $cordovaVibration,  $cordovaNativeAudio, $timeout) {
+.controller('JugarCtrl', function($scope, $ionicPopup, $state, $stateParams, $cordovaVibration,  $cordovaNativeAudio, $timeout, $cordovaFile) {
   $scope.usuario = angular.fromJson($stateParams);
+  $scope.leon = 'img/leon.png';
+  $scope.gallo = 'img/gallo.jpg';
+  $scope.becerro = 'img/becerro.jpg';
+  $scope.pajarito = 'img/pajarito.jpg';
+  $scope.caballo = 'img/caballo.jpg';
+  $scope.oveja = 'img/oveja.jpg';
+  
 
-$scope.reproducirSonido = function(idSonido) {
+$scope.reproducirSonido = function(idSonido, flagGuardar) {
+
     switch(idSonido){
         case 'caballo':
           $scope.play('caballo');
@@ -49,7 +57,48 @@ $scope.reproducirSonido = function(idSonido) {
         default:
         break;
       }
+
+      if(flagGuardar)
+        $scope.guardar(idSonido + "\n");
+
   };
+
+
+$scope.guardar = function(idSonido) {
+  try{
+    $cordovaFile.checkFile(cordova.file.externalDataDirectory, "piano.txt")
+      .then(function (success) {
+
+        $cordovaFile.writeExistingFile(cordova.file.externalDataDirectory, "piano.txt", idSonido)
+            .then(function (success) {
+
+            }, function (error) {
+            
+            });
+      }, function (error) {
+        
+        $cordovaFile.createFile(cordova.file.externalDataDirectory, "piano.txt", true)
+          .then(function (success) {
+
+          }, function (error) {
+
+          });
+
+        $cordovaFile.writeFile(cordova.file.externalDataDirectory, "piano.txt", "USUARIO\n", true)
+          .then(function (success) {
+
+          }, function (error) {
+
+          });
+      });
+  } catch(err){
+    console.log("No es un dispositivo mobile");
+  }
+      
+}
+
+
+
 
 /****FUNCIONES NATIVE AUDIO****/
 try{
@@ -115,5 +164,15 @@ $scope.play = function (sound) {
   }
 };
 /****FIN FUNCIONES NATIVE AUDIO****/
+
+
+/****FUNCIONES FILE****/
+document.addEventListener('deviceready', function () {
+
+   alert("ue onda");
+
+  });
+
+/****FIN FUNCIONES FILE****/
 
 });

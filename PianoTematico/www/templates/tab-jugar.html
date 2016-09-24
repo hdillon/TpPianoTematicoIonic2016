@@ -2,19 +2,17 @@
   <ion-content>
 
 <div class = "row">
-   <div class = "col col-100 col-top"><button class="button button-full button-positive" ng-click="reproducirSonido('caballo')">Caballo</button></div>
-   <div class = "col col-100 col-top"><button class="button button-full button-balanced" ng-click="reproducirSonido('leon')">Leon</button></div>
-   <div class = "col col-100 col-top"><button class="button button-full button-calm" ng-click="reproducirSonido('becerro')">Becerro</button></div>
+   <div class = "col col-100 col-top"><img  ng-src="{{caballo}}" ng-click="reproducirSonido('caballo', true)"></img></div>
+   <div class = "col col-100 col-top"><img  ng-src="{{leon}}" ng-click="reproducirSonido('leon', true)"></img></div>
+   <div class = "col col-100 col-top"><img  ng-src="{{becerro}}" ng-click="reproducirSonido('becerro', true)"></img></div>
 </div>
 <div class = "row">
-   <div class = "col col-100 col-top"><button class="button button-full button-energized" ng-click="reproducirSonido('pajarito')">Pajarito</button></div>
-   <div class = "col col-100 col-top"><button class="button button-full button-assertive" ng-click="reproducirSonido('oveja')">Oveja</button></div>
-   <div class = "col col-100 col-top"><button class="button button-full button-royal" ng-click="reproducirSonido('gallo')">Gallo</button></div>
+   <div class = "col col-100 col-top"><img  ng-src="{{pajarito}}" ng-click="reproducirSonido('pajarito', true)"></img></div>
+   <div class = "col col-100 col-top"><img  ng-src="{{oveja}}" ng-click="reproducirSonido('oveja', true)"></img></div>
+   <div class = "col col-100 col-top"><img  ng-src="{{gallo}}" ng-click="reproducirSonido('gallo', true)"></img></div>
  </div>
 
-<div class="row row-bottom"></div>
-<div class="row row-bottom"></div>
-<div class="row row-bottom"></div>
+
 <div class="row row-bottom">
   <div class="col"><a class="button icon-right ion-chevron-right button-dark">Reproducir</a></div>
 </div>
