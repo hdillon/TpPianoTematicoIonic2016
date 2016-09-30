@@ -25,7 +25,7 @@ angular.module('starter.controllers', [])
 
 .controller('JugarCtrl', function($scope, $ionicPopup, $state, $stateParams, $cordovaVibration,  $cordovaNativeAudio, $timeout, $cordovaFile) {
   $scope.usuario = angular.fromJson($stateParams);
-  $scope.leon = 'img/leon.png';
+  $scope.leon = 'img/leon.jpg';
   $scope.gallo = 'img/gallo.jpg';
   $scope.becerro = 'img/becerro.jpg';
   $scope.pajarito = 'img/pajarito.jpg';
@@ -169,7 +169,7 @@ $scope.play = function (sound) {
 /****FUNCIONES FILE****/
 document.addEventListener('deviceready', function () {
 
-   alert("ue onda");
+
 
   });
 
