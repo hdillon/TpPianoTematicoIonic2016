@@ -15,31 +15,50 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-    .state('tab', {
-    url: '/tab',
+  .state('app', {
+    url: '/app',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/menu.html',
+    controller: 'AppCtrl'
   })
-  .state('tab.login', {
+  .state('app.login', {
     url: '/login',
     views: {
-      'tab-login': {
+      'menuContent': {
         templateUrl: 'templates/tab-login.html',
         controller: 'LoginCtrl'
       }
     }
   })
-  .state('tab.jugar', {
+  .state('app.jugar', {
       url: '/jugar/:nombre',
       views: {
-        'tab-jugar': {
+        'menuContent': {
           templateUrl: 'templates/tab-jugar.html',
           controller: 'JugarCtrl'
         }
       }
     })
+  .state('app.acercade', {
+    url: '/acercade',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/tab-acercade.html',
+        controller: 'AcercadeCtrl'
+      }
+    }
+  })
+  .state('app.single', {
+    url: '/playlists/:playlistId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/playlist.html',
+        controller: 'PlaylistCtrl'
+      }
+    }
+  });
 
-  $urlRouterProvider.otherwise('/tab/login');
+  $urlRouterProvider.otherwise('/app/acercade');
 
 });
 
