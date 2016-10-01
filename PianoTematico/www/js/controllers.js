@@ -181,6 +181,10 @@ document.addEventListener('deviceready', function () {
   $scope.miFoto = 'img/perfil.png';
 })
 
+.controller('InicioCtrl', function($scope) {
+  
+})
+
 
 
 
@@ -236,6 +240,7 @@ document.addEventListener('deviceready', function () {
     { title: 'Cowbell', id: 6 }
   ];
 })
+
 
 
 

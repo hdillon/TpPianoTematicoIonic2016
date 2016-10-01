@@ -48,17 +48,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   })
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  .state('app.inicio', {
+    url: '/inicio',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/inicio.html',
+        controller: 'InicioCtrl'
       }
     }
   });
 
-  $urlRouterProvider.otherwise('/app/acercade');
+  $urlRouterProvider.otherwise('/app/inicio');
 
 });
 
