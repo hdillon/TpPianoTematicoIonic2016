@@ -154,6 +154,7 @@ try{
   }
 }catch(err){
   console.log("No es un dispositivo mobile");
+  console.info("ERROR AL CARGAR AUDIOS: ", err);
 }
 
 $scope.play = function (sound) {
