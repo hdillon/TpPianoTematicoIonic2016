@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     }
   })
   .state('app.jugar', {
-      url: '/jugar/:nombre',
+      url: '/jugar',
       views: {
         'menuContent': {
           templateUrl: 'templates/tab-jugar.html',
@@ -39,15 +39,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
         }
       }
     })
-  .state('app.acercade', {
-    url: '/acercade',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/tab-acercade.html',
-        controller: 'AcercadeCtrl'
+  .state('app.autor', {
+      url: '/autor',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/vistaAutor.html',
+          controller: 'AutorCtrl'
+        }
       }
-    }
-  })
+    })
   .state('app.inicio', {
     url: '/inicio',
     views: {

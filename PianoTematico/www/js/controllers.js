@@ -24,13 +24,14 @@ angular.module('starter.controllers', [])
 })
 
 .controller('JugarCtrl', function($scope, $ionicPopup, $state, $stateParams, $cordovaVibration,  $cordovaNativeAudio, $timeout, $cordovaFile) {
-  $scope.usuario = angular.fromJson($stateParams);
+  //$scope.usuario = angular.fromJson($stateParams);
   $scope.leon = 'img/leon.jpg';
   $scope.gallo = 'img/gallo.jpg';
   $scope.becerro = 'img/becerro.jpg';
   $scope.pajarito = 'img/pajarito.jpg';
   $scope.caballo = 'img/caballo.jpg';
   $scope.oveja = 'img/oveja.jpg';
+  $scope.fileContent ="";
   
 
 $scope.reproducirSonido = function(idSonido, flagGuardar) {
@@ -97,8 +98,44 @@ $scope.guardar = function(idSonido) {
       
 }
 
+$scope.leer = function() {
+  try{
+    $cordovaFile.readAsText(cordova.file.externalDataDirectory, "piano.txt")
+          .then(function (success) {
+            console.info("SUCCES READ: ", success);
+            $scope.fileContent = success.split("\n");
+            console.info("SPLITEO: ", $scope.fileContent);    
+            $scope.reproducirSecuencia();//LLAMO A LA FUNCION QUE REPRODUCE LA SECUENCIA CON EL ARRAY LEÍDO
+          }, function (error) {
+            console.info("ERROR READ: ", error);
+          });
+  }catch(err)
+  {
+    console.info("Error leyendo archivo: ", err); 
+  }
+}
 
+$scope.reproducirSecuencia = function() {
+  try{
+    for (var i = 1; i < $scope.fileContent.length - 1; i++) {
+    //alert($scope.fileContent[i]);
+      $scope.reproducirSonido($scope.fileContent[i], false);
+      $scope.sleep(1700);
+    }
+  }catch(err)
+  {
+    console.info("Error reproducirSecuencia: ", err); 
+  }
+}
 
+$scope.sleep = function(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 
 /****FUNCIONES NATIVE AUDIO****/
 try{
@@ -178,8 +215,18 @@ document.addEventListener('deviceready', function () {
 
 })
 
-.controller('AcercadeCtrl', function($scope) {
+.controller('AutorCtrl', function($scope, $cordovaInAppBrowser) {
   $scope.miFoto = 'img/perfil.png';
+  var options = {
+      location: 'yes',
+      clearcache: 'yes',
+      toolbar: 'no'
+    };
+
+  $scope.InAppBrowser=function(){
+    $cordovaInAppBrowser.open('https://github.com/hdillon', '_system', options);
+  }
+
 })
 
 .controller('InicioCtrl', function($scope) {
@@ -187,61 +234,10 @@ document.addEventListener('deviceready', function () {
 })
 
 
-
-
-//BORRAR ******************************************************************************************************
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
 
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
 })
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
 
 
 
