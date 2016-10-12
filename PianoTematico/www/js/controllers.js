@@ -1,17 +1,51 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $ionicPopup, $state) { 
-  $scope.usuario = {};
-  $scope.usuario.nombre = "";
-  $scope.login = function() {
-      if($scope.usuario.nombre == "")
-        $scope.showAlert("POR FAVOR INGRESE SU NOMBRE");
+.controller('LoginCtrl', function($scope, $ionicPopup, $state, $timeout) { 
+  $scope.loginData={};
+    $scope.loginData.username = "dillonhoraciodavid@gmail.com";
+    $scope.loginData.password = "34551422";
+
+    $scope.loguear = function() {
+      if($scope.loginData.username == "" || $scope.loginData.password == "")
+        $scope.showAlert("DEBE IMGRESAR MAIL Y PASSWORD!");
       else{
-        $scope.showAlert("BIENVENIDO " + $scope.usuario.nombre + "!");
-        var usuario = { "nombre": $scope.usuario.nombre};
-        $state.go('app.jugar', usuario);
-      }
-    };
+      firebase.auth().signInWithEmailAndPassword($scope.loginData.username, $scope.loginData.password).catch(function(error) {
+        $scope.showAlert("DATOS INCORRECTOS!");
+        console.info("error", error);
+ 
+      }).then(function(respuesta){
+        $timeout(function(){
+          //console.info("RESP", firebase.auth().currentUser);
+          /*console.info("Esta Autenticado", respuesta.emailVerified);
+          console.info("respuesta", respuesta);*/
+          if(firebase.auth().currentUser != null){
+            $scope.showAlert("BIENVENIDO!");
+            $state.go('app.jugar');
+          }
+          
+        });
+        
+      });
+     }
+   }
+
+//emailVerified: false
+
+    $scope.resetearPass = function() {
+     firebase.auth().sendPasswordResetEmail($scope.loginData.username)
+     .then(function(respuesta){
+        console.info("respuestaReset", respuesta);
+     }).catch(function(error){
+      console.info("Se ropio el reset", error);
+
+     });
+     
+    }
+    
+    $scope.verificarEmail = function() {
+      alert("asd");
+     
+    }
 
     $scope.showAlert = function(resultado) {
       var alertPopup = $ionicPopup.alert({
@@ -20,7 +54,7 @@ angular.module('starter.controllers', [])
       alertPopup.then(function(res) {
          // Custom functionality....
       });
-   };
+   }
 })
 
 .controller('JugarCtrl', function($scope, $ionicPopup, $state, $stateParams, $cordovaVibration,  $cordovaNativeAudio, $timeout, $cordovaFile) {
@@ -234,10 +268,33 @@ document.addEventListener('deviceready', function () {
 })
 
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $timeout) {
 
 
 })
+
+.controller('LogoutCtrl', function($scope, $state, $timeout, $ionicHistory) {
+
+    $scope.desloguear = function(confirmacion) {
+      $ionicHistory.nextViewOptions({//ESTA CONFIG HACE QUE NO ME APAREZCA EL BTN BACK CUANDO HAGO UN STATE GO A OTRA VIEW
+        disableBack: true
+      });
+      
+      if(confirmacion == 'SI'){
+        firebase.auth().signOut().then(function(){
+          $timeout(function(){
+            console.info("outLogin", firebase.auth().currentUser);
+            $state.go('login');
+          });
+          
+        });
+       }else
+         $state.go('app.jugar');
+     }
+
+
+})
+
 
 
 

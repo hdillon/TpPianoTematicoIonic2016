@@ -21,12 +21,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-  .state('app.login', {
-    url: '/login',
+  .state('app.logout', {
+    url: '/logout',
     views: {
       'menuContent': {
-        templateUrl: 'templates/tab-login.html',
-        controller: 'LoginCtrl'
+        templateUrl: 'templates/tab-logout.html',
+        controller: 'LogoutCtrl'
       }
     }
   })
@@ -48,17 +48,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
         }
       }
     })
-  .state('app.inicio', {
-    url: '/inicio',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/inicio.html',
-        controller: 'InicioCtrl'
-      }
-    }
+  .state('login', {
+    url: '/login',
+        templateUrl: 'templates/login.html',
+        controller: 'LoginCtrl'
+
   });
 
-  $urlRouterProvider.otherwise('/app/inicio');
+  $urlRouterProvider.otherwise('/login');
 
 });
 
