@@ -6,7 +6,9 @@ angular.module('starter.controllers', [])
     $scope.loginData.password = "34551422";
 
     $scope.loguear = function() {
-      if($scope.loginData.username == "" || $scope.loginData.password == "")
+      $scope.showAlert("BIENVENIDO!");
+            $state.go('app.jugar');
+      /*if($scope.loginData.username == "" || $scope.loginData.password == "")
         $scope.showAlert("DEBE IMGRESAR MAIL Y PASSWORD!");
       else{
       firebase.auth().signInWithEmailAndPassword($scope.loginData.username, $scope.loginData.password).catch(function(error) {
@@ -15,9 +17,6 @@ angular.module('starter.controllers', [])
  
       }).then(function(respuesta){
         $timeout(function(){
-          //console.info("RESP", firebase.auth().currentUser);
-          /*console.info("Esta Autenticado", respuesta.emailVerified);
-          console.info("respuesta", respuesta);*/
           if(firebase.auth().currentUser != null){
             $scope.showAlert("BIENVENIDO!");
             $state.go('app.jugar');
@@ -26,7 +25,7 @@ angular.module('starter.controllers', [])
         });
         
       });
-     }
+     }*/
    }
 
 //emailVerified: false
@@ -57,7 +56,7 @@ angular.module('starter.controllers', [])
    }
 })
 
-.controller('JugarCtrl', function($scope, $ionicPopup, $state, $stateParams, $cordovaVibration,  $cordovaNativeAudio, $timeout, $cordovaFile) {
+.controller('JugarCtrl', function($scope, $ionicPopup, $state, $stateParams, $cordovaVibration,  $cordovaNativeAudio, $timeout, $cordovaFile, usSpinnerService) {
   //$scope.usuario = angular.fromJson($stateParams);
   $scope.leon = 'img/leon.jpg';
   $scope.gallo = 'img/gallo.jpg';
@@ -66,6 +65,15 @@ angular.module('starter.controllers', [])
   $scope.caballo = 'img/caballo.jpg';
   $scope.oveja = 'img/oveja.jpg';
   $scope.fileContent ="";
+
+   $scope.startSpin = function(){
+        usSpinnerService.spin('spinnerJugar');
+    }
+    $scope.stopSpin = function(){
+        usSpinnerService.stop('spinnerJugar');
+    }
+
+    $scope.startSpin();
   
 
 $scope.reproducirSonido = function(idSonido, flagGuardar) {
@@ -134,18 +142,22 @@ $scope.guardar = function(idSonido) {
 
 $scope.leer = function() {
   try{
+    $scope.startSpin();
     $cordovaFile.readAsText(cordova.file.externalDataDirectory, "piano.txt")
           .then(function (success) {
             console.info("SUCCES READ: ", success);
             $scope.fileContent = success.split("\n");
             console.info("SPLITEO: ", $scope.fileContent);    
             $scope.reproducirSecuencia();//LLAMO A LA FUNCION QUE REPRODUCE LA SECUENCIA CON EL ARRAY LEÍDO
+            $scope.stopSpin();
           }, function (error) {
             console.info("ERROR READ: ", error);
+            $scope.stopSpin();
           });
   }catch(err)
   {
     console.info("Error leyendo archivo: ", err); 
+    $scope.stopSpin();
   }
 }
 
@@ -274,6 +286,19 @@ document.addEventListener('deviceready', function () {
 })
 
 .controller('LogoutCtrl', function($scope, $state, $timeout, $ionicHistory) {
+
+  $scope.textoSalir = document.getElementById('texto');
+  $scope.mensaje = "¿DESEA DESLOGUEARSE DE LA APLICACIÓN?";
+  $scope.indice = 0;
+
+  window.escribirMensaje = function() {
+      if ($scope.indice <= $scope.mensaje.length) {
+          $scope.textoSalir.value = $scope.mensaje.substr(0, $scope.indice++);
+          setTimeout("escribirMensaje()", 50);
+      }
+  }
+
+  escribirMensaje();
 
     $scope.desloguear = function(confirmacion) {
       $ionicHistory.nextViewOptions({//ESTA CONFIG HACE QUE NO ME APAREZCA EL BTN BACK CUANDO HAGO UN STATE GO A OTRA VIEW

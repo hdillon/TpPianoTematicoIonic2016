@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angularSpinner'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

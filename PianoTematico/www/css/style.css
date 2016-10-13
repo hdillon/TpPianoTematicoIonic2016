@@ -3,3 +3,49 @@ img {
     max-width: 100%;
 
 }
+
+ion-content{
+	background-color: green;
+	background: url('../img/pianoFondo.jpeg');
+	background-repeat: no-repeat;
+    background-position: center;
+    margin: auto;
+    z-index: 2;
+    position: relative;
+    no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.item-complex .item-content { background-color: #ADD8E6 !important; color:black; }
+
+form.lista{
+  background-color: #262B32 !important; color:white; 
+}
+
+label.lista{
+  background-color: #262B32 !important; color:white; 
+}
+
+span.lista{
+  background-color: #262B32 !important; color:white; 
+}
+
+input.lista{
+  background-color: #262B32 !important; color:white; 
+}
+
+h3.menutitle {
+  color:white;
+}
+
+
+
+.bar-stable.bar-header, div.tab-nav.tabs{
+    background-color:#ADD8E6 !important;
+}
+
+div.title.title-center.header-item, ion-header-bar, div.tab-nav.tabs i, div.tab-nav.tabs span{
+    color:black;
+}
